@@ -1,0 +1,7 @@
+case "${ACTION}" in
+    post)
+	ln -sf /opt/Brother /usr/local/Brother
+	# add brother 4 to /etc/sane.d/dll.conf
+	opt/brother/scanner/brscan4/setupSaneScan4 -i
+    ;;
+esac

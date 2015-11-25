@@ -1,0 +1,43 @@
+# Template file for 'brother-brscan4'
+pkgname=brother-brscan4
+version=0.4.3
+revision=0
+maintainer="Joschka Tillmanns <joschka@tillmanns.me>"
+homepage="http://support.brother.com/g/b/index.aspx"
+license="GPL-2"
+short_desc="Scanner driver for the brother DCP-L2520DW printer/scanner"
+only_for_archs="i686 x86_64"
+makedepends="sane-devel"
+depends="sane"
+create_wrksrc=yes
+
+if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
+	distfiles="http://download.brother.com/welcome/dlf006645/brscan4-${version}-2.amd64.deb"
+	checksum="40aaac9c449df8e50472b6759eef54043b0fa669722d54b8c3267a1e2956176c"
+	debpkgid="2.amd64"
+	mylibdir="lib64"
+elif [ "$XBPS_TARGET_MACHINE" = "i686" ]; then
+	distfiles="http://download.brother.com/welcome/dlf006646/brscan4-${version}-2.i386.deb"
+	checksum="72a242d7243fa55c6a667989ba29b26b4e52b320254428a86baca4e0368494a6"
+	debpkgid="2.i386"
+	mylibdir="lib"
+fi
+
+do_extract() {
+	ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/brscan4-${version}-${debpkgid}.deb
+	cd ${wrksrc}
+	tar xzpvf data.tar.gz
+}
+
+do_install(){
+	# dll and symlink (correctly put in /usr/lib)
+	cd ${wrksrc}
+	vinstall ./usr/${mylibdir}/sane/libsane-brother4.so.1.0.7 755 usr/lib/sane
+	ln -sf  /usr/lib/sane/libsane-brother4.so.1.0.7 ${DESTDIR}/usr/lib/sane/libsane-brother4.so.1
+	ln -sf  /usr/lib/sane/libsane-brother4.so.1.0.7 ${DESTDIR}/usr/lib/sane/libsane-brother4.so
+	vmkdir /opt/brother
+	vcopy "./opt/brother/*" /opt/brother
+	vmkdir /etc/opt
+	vcopy "./etc/opt/*" /etc/opt
+	vinstall ./opt/brother/scanner/brscan4/brsaneconfig4 755 /usr/bin
+}
