@@ -1,0 +1,27 @@
+# Template file for 'brother-dcpl2520lw-lpr'
+pkgname=brother-dcpl2520dw-lpr
+version=3.2.0
+revision=0
+maintainer="Joschka Tillmanns <joschka@tillmanns.me>"
+homepage="http://support.brother.com/g/b/index.aspx"
+license="GPL-2"
+short_desc="LPR driver for the brother DCP-L2520DW printer/scanner"
+distfiles="http://download.brother.com/welcome/dlf101759/dcpl2520dwlpr-${version}-1.i386.deb"
+checksum="81a24e3b10fabf1c3c51ce83917e072fa2a0cd9b9920623c52153cad5ee9f47f"
+only_for_archs="i686 x86_64"
+create_wrksrc=yes
+depends="a2ps ghostscript"
+mutable_files="/opt/brother/Printers/DCPL2520DW/inf/brDCPL2520DWrc"
+
+if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
+	depends+=" glibc-32bit"
+fi
+
+do_extract() {
+	ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/dcpl2520dwlpr-${version}-1.i386.deb
+}
+
+do_install(){
+	mkdir -p ${DESTDIR}
+	tar xzpvf data.tar.gz -C ${DESTDIR}
+}

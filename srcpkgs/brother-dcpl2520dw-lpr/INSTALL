@@ -1,0 +1,6 @@
+case "${ACTION}" in
+    post)
+	mkdir -p /var/spool/lpd
+	/opt/brother/Printers/DCPL2520DW/inf/setupPrintcap dcpl2520dw -i
+    ;;
+esac
