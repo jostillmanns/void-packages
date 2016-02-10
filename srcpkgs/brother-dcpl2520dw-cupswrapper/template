@@ -1,7 +1,7 @@
 # Template file for 'brother-dcp2520dw-cupswrapper'
 pkgname=brother-dcpl2520dw-cupswrapper
 version=3.2.0
-revision=0
+revision=1
 maintainer="Joschka Tillmanns <joschka@tillmanns.me>"
 homepage="http://support.brother.com/g/b/index.aspx"
 license="GPL-2"
@@ -16,7 +16,7 @@ do_extract() {
 	ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/dcpl2520dwcupswrapper-${version}-1.i386.deb
 }
 
-do_install(){
+do_install() {
 	mkdir -p ${DESTDIR}
 	tar xzpvf data.tar.gz -C ${DESTDIR}
 	rm ${DESTDIR}/opt/brother/Printers/DCPL2520DW/cupswrapper/brother_lpdwrapper_DCPL2520DW
